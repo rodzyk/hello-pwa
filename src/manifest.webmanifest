@@ -1,11 +1,11 @@
 {
   "name": "hello-pwa",
   "short_name": "hello-pwa",
-  "theme_color": "#1976d2",
-  "background_color": "#fafafa",
+  "theme_color": "#161a20",
+  "background_color": "#161a20",
   "display": "standalone",
   "scope": "./",
-  "start_url": "https://rodzyk.github.io/hello-pwa",
+  "start_url": "./",
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",
@@ -58,8 +58,8 @@
   ],
   "protocol_handlers": [
     {
-      "protocol": "hello+pwa",
-      "url": "/"
+      "protocol": "web+hellopwa",
+      "url": "/%s"
     }
   ]
 }

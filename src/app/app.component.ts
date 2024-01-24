@@ -10,5 +10,8 @@ import { RouterOutlet } from '@angular/router';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'hello-pwa';
+ 
+  registerProtocolHandler() {
+    (navigator as any).registerProtocolHandler()
+  }
 }
