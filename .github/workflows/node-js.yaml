@@ -32,11 +32,7 @@ jobs:
           cache: "npm"
       - run: npm ci --force
       - run: npm install -g @angular/cli > /dev/null
-      - run: ng build --output-path dist
-
-      - name: Copy index.html to 404.html
-        run: cp dist/browser/index.html dist/browser/404.html
-
+      - run: ng build --output-path dist --base-href /hello-pwa/
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
