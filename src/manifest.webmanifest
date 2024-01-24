@@ -55,5 +55,11 @@
       "type": "image/png",
       "purpose": "maskable any"
     }
+  ],
+  "protocol_handlers": [
+    {
+      "protocol": "hello+pwa",
+      "url": "/"
+    }
   ]
 }
