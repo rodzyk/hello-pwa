@@ -12,6 +12,6 @@ import { RouterOutlet } from '@angular/router';
 export class AppComponent {
  
   registerProtocolHandler() {
-    (navigator as any).registerProtocolHandler()
+    (navigator as any).registerProtocolHandler("web+hellopwa", "/%s")
   }
 }
