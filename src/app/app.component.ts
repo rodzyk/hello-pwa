@@ -44,7 +44,7 @@ export class AppComponent implements OnInit {
     this.recognition.continuous = true; // Розпізнавання продовжується постійно
 
     // Функція, що викликається при успішному розпізнаванні мовлення
-    this.recognition.onresult = function (event: any) {
+    this.recognition.onresult =  (event: any) => {
       // var transcript = event.results[event.results.length - 1][0].transcript;
       const transcript = event.results[0][0].transcript;
 
@@ -56,7 +56,7 @@ export class AppComponent implements OnInit {
     };
 
     // Функція, що викликається при помилці розпізнавання
-    this.recognition.onerror = function (event: any) {
+    this.recognition.onerror =  (event: any) => {
       this.recLogs.push({
         type: "error",
         title: "Помилка розпізнавання мовлення",
@@ -65,14 +65,13 @@ export class AppComponent implements OnInit {
     };
 
     // Функція, що викликається при паузі у мовленні
-    this.recognition.onpause = function (event: any) {
+    this.recognition.onpause =  (event: any) => {
       this.recLogs.push({
         type: "log",
         title: "Розпізнавання призупинено. Запускаємо знову.",
         data: null
       })
       try {
-        if (!this.paused())
           this.start(); // Поновлюємо розпізнавання
       } catch (error) {
         this.recLogs.push({
