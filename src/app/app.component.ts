@@ -1,4 +1,4 @@
-import { Component, OnInit, WritableSignal, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, WritableSignal, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   recognizedText: any[] = [];
   recLogs: any[] = [];
 
-  constructor() {
+  constructor(private changeDetectorRef: ChangeDetectorRef) {
 
   }
   ngOnInit(): void {
@@ -60,6 +60,7 @@ export class AppComponent implements OnInit {
         text: transcript,
         date: Date.now()
       })
+      this.changeDetectorRef.detectChanges();
       // Тут можна реалізувати логіку обробки розпізнаного тексту
     };
 
@@ -94,13 +95,13 @@ export class AppComponent implements OnInit {
   }
 
   onRecError(event: any) {
-    console.error('Помилка розпізнавання мовлення', event?.error);
-
     this.recLogs.push({
       type: "error",
       title: "Помилка розпізнавання мовлення",
       data: event?.error
     })
+    this.changeDetectorRef.detectChanges();
+    console.error('Помилка розпізнавання мовлення', event?.error);
   }
 
   toggle() {
