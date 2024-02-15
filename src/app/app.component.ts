@@ -49,7 +49,7 @@ export class AppComponent implements OnInit {
     })
     this.recognition = new ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition)();
     this.recognition.lang = 'en-US'; // Встановлюємо мову розпізнавання
-    this.recognition.continuous = true; // Розпізнавання продовжується постійно
+    // this.recognition.continuous = true; // Розпізнавання продовжується постійно
 
     // Функція, що викликається при успішному розпізнаванні мовлення
     this.recognition.onresult = (event: any) => {
@@ -61,6 +61,7 @@ export class AppComponent implements OnInit {
         date: Date.now()
       })
       this.changeDetectorRef.detectChanges();
+      this.recognition.start();
       // Тут можна реалізувати логіку обробки розпізнаного тексту
     };
 
