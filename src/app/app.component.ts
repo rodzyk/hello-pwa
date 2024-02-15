@@ -42,7 +42,8 @@ export class AppComponent {
 
     // Функція, що викликається при успішному розпізнаванні мовлення
     this.recognition.onresult = function (event: any) {
-      var transcript = event.results[event.results.length - 1][0].transcript;
+      // var transcript = event.results[event.results.length - 1][0].transcript;
+      const transcript = event.results[0][0].transcript;
 
       this.recognizedText.push({
         text: transcript,
@@ -56,7 +57,7 @@ export class AppComponent {
       this.logs.push({
         type: "error",
         title: "Помилка розпізнавання мовлення",
-        data: event.error
+        data: event
       })
     };
 
@@ -69,7 +70,7 @@ export class AppComponent {
       })
       try {
         if (!this.paused())
-          this.recognition.start(); // Поновлюємо розпізнавання
+          this.start(); // Поновлюємо розпізнавання
       } catch (error) {
         this.logs.push({
           type: "error",
@@ -82,11 +83,19 @@ export class AppComponent {
 
   toggle() {
     if (this.paused) {
-      this.paused = false;
-      this.recognition.start();
+      this.start()
     } else {
-      this.recognition.stop();
-      this.paused = true;
+      this.stop()
+     
     }
+  }
+
+  start() {
+    this.paused = false;
+      this.recognition.start();
+  }
+  stop() {
+    this.recognition.stop();
+    this.paused = true;
   }
 }

@@ -5,13 +5,13 @@
     <section>
         <div style="overflow: auto;">
             @for (t of recognizedText; track $index) {
-            <span [title]="t.date">{{t.text}}</span>
+            <span [title]="t.date"><small><code>{{t.date | date : "short"}}</code></small><code>{{t.text | json}}</code></span>
             }
         </div>
     </section>
 </div>
 <details class="logs">
-    <summary>Logs</summary>
+    <summary>LOgs</summary>
     <div style="overflow: auto;">
         @for (log of logs.reverse(); track $index) {
         <div [class]="log.type">
