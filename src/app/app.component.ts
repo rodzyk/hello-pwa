@@ -76,6 +76,7 @@ export class AppComponent implements OnInit {
         title: "Розпізнавання призупинено. Запускаємо знову.",
         data: null
       })
+      this.changeDetectorRef.detectChanges();
       try {
         this.start(); // Поновлюємо розпізнавання
       } catch (error) {
@@ -85,6 +86,7 @@ export class AppComponent implements OnInit {
           title: "Помилка при поновленні розпізнавання",
           data: error
         })
+        this.changeDetectorRef.detectChanges();
       }
     };
     this.recLogs.push({
