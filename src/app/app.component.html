@@ -4,21 +4,20 @@
     </header>
     <section>
         <div style="overflow: auto;">
-            @for (t of recognizedText; track $index) {
-            <span [title]="t.date"><small><code>{{t.date | date : "short"}}</code></small><code>{{t.text | json}}</code></span>
-            }
+            <span *ngFor="let t of recognizedText" [title]="t.date"><small><code>{{t.date | date : "short"}}</code></small><code>{{t.text | json}}</code></span>
+            
         </div>
     </section>
 </div>
 <details class="logs">
-    <summary>LOGS <small>v0.0.1</small></summary>
+    <summary>LOGS <small>v0.0.2</small></summary>
     <div style="overflow: auto;">
-        @for (log of recLogs; track $index) {
-        <div [class]="log.type">
+        
+        <div [class]="log.type" *ngFor="let log of recLogs">
             <code>{{log.title}}</code>
-            @if(log.data){<code>{{log.data | json}}</code>}
+            <code *ngIf="log.data">{{log.data | json}}</code>
         </div>
-        }
+        
     </div>
 </details>
 <router-outlet></router-outlet>
