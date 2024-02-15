@@ -2,11 +2,6 @@ import { Component, WritableSignal, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
-const MANIFESTS = {
-  en: "manifest.webmanifest",
-  uk: "manifest-uk.webmanifest"
-}
-
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -15,27 +10,83 @@ const MANIFESTS = {
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  lang: string = localStorage.getItem("lang") ?? "en"
-
-  linkElement: WritableSignal<HTMLElement | null> = signal(document.querySelector('link[rel="manifest"]'))
+  paused: boolean = true;
+  recognition!: any;
+  recognizedText: any[] = [];
+  logs: any[] = [];
 
   constructor() {
-    this.changeManifest();
+    if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
+      try {
+        this.initRecognition()
+      } catch (error) {
+        this.logs.push({
+          type: "error",
+          title: "Помилка ініціалізації розпізнавання мовлення",
+          data: error
+        })
+      }
+    } else {
+      this.logs.push({
+        type: "error",
+        title: "Браузер не підтримує Web Speech API",
+        data: null
+      })
+    }
   }
 
-  toggleLang() {
-    this.lang = this.lang == 'en' ? 'uk' : 'en';
+  initRecognition() {
+    this.recognition = new ((window as any).SpeechRecognition || (window as any).webkitSpeechRecognition)();
+    this.recognition.lang = 'en-US'; // Встановлюємо мову розпізнавання
+    this.recognition.continuous = true; // Розпізнавання продовжується постійно
 
-    localStorage.setItem("lang", this.lang)
+    // Функція, що викликається при успішному розпізнаванні мовлення
+    this.recognition.onresult = function (event: any) {
+      var transcript = event.results[event.results.length - 1][0].transcript;
 
-    this.changeManifest()
+      this.recognizedText.push({
+        text: transcript,
+        date: Date.now()
+      })
+      // Тут можна реалізувати логіку обробки розпізнаного тексту
+    };
+
+    // Функція, що викликається при помилці розпізнавання
+    this.recognition.onerror = function (event: any) {
+      this.logs.push({
+        type: "error",
+        title: "Помилка розпізнавання мовлення",
+        data: event.error
+      })
+    };
+
+    // Функція, що викликається при паузі у мовленні
+    this.recognition.onpause = function (event: any) {
+      this.logs.push({
+        type: "log",
+        title: "Розпізнавання призупинено. Запускаємо знову.",
+        data: null
+      })
+      try {
+        if (!this.paused())
+          this.recognition.start(); // Поновлюємо розпізнавання
+      } catch (error) {
+        this.logs.push({
+          type: "error",
+          title: "Помилка при поновленні розпізнавання",
+          data: error
+        })
+      }
+    };
   }
 
-  changeManifest() {
-    this.linkElement()?.setAttribute('href', MANIFESTS[this.lang as keyof { en: string; uk: string; }]);
-  }
-
-  registerProtocolHandler() {
-    (navigator as any).registerProtocolHandler("web+hellopwa", "/%s")
+  toggle() {
+    if (this.paused) {
+      this.paused = false;
+      this.recognition.start();
+    } else {
+      this.recognition.stop();
+      this.paused = true;
+    }
   }
 }

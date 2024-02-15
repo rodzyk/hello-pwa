@@ -1,0 +1,24 @@
+:host {
+    display: grid;
+    min-height: 100vh;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+}
+
+.logs {
+    & > div {
+        display: grid;
+        gap: 1ch;
+        div {
+            padding: 1ch;
+            border-radius: 1ch;
+            border: 1px solid;
+            &.error {
+                border-color: red;
+            }
+            &.log {
+                border-color: blue;
+            }
+        }
+    }
+}

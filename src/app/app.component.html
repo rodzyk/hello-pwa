@@ -1,3 +1,24 @@
-<button (click)="registerProtocolHandler()">registerProtocolHandler</button>
+<div>
+    <header>
+        <button (click)="toggle()">{{(paused) ? 'Start': 'Stop'}}</button>
+    </header>
+    <section>
+        <div style="overflow: auto;">
+            @for (t of recognizedText; track $index) {
+            <span [title]="t.date">{{t.text}}</span>
+            }
+        </div>
+    </section>
+</div>
+<details class="logs">
+    <summary>Logs</summary>
+    <div style="overflow: auto;">
+        @for (log of logs.reverse(); track $index) {
+        <div [class]="log.type">
+            <code>{{log.title}}</code>
+            @if(log.data){<code>{{log.data | json}}</code>}
+        </div>
+        }
+    </div>
+</details>
 <router-outlet></router-outlet>
-<button (click)="toggleLang()">{{lang}}</button>
