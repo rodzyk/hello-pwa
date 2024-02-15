@@ -13,21 +13,21 @@ export class AppComponent {
   paused: boolean = true;
   recognition!: any;
   recognizedText: any[] = [];
-  logs: any[] = [];
+  recLogs: any[] = [];
 
   constructor() {
     if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
       try {
         this.initRecognition()
       } catch (error) {
-        this.logs.push({
+        this.recLogs.push({
           type: "error",
           title: "Помилка ініціалізації розпізнавання мовлення",
           data: error
         })
       }
     } else {
-      this.logs.push({
+      this.recLogs.push({
         type: "error",
         title: "Браузер не підтримує Web Speech API",
         data: null
@@ -54,7 +54,7 @@ export class AppComponent {
 
     // Функція, що викликається при помилці розпізнавання
     this.recognition.onerror = function (event: any) {
-      this.logs.push({
+      this.recLogs.push({
         type: "error",
         title: "Помилка розпізнавання мовлення",
         data: event
@@ -63,7 +63,7 @@ export class AppComponent {
 
     // Функція, що викликається при паузі у мовленні
     this.recognition.onpause = function (event: any) {
-      this.logs.push({
+      this.recLogs.push({
         type: "log",
         title: "Розпізнавання призупинено. Запускаємо знову.",
         data: null
@@ -72,7 +72,7 @@ export class AppComponent {
         if (!this.paused())
           this.start(); // Поновлюємо розпізнавання
       } catch (error) {
-        this.logs.push({
+        this.recLogs.push({
           type: "error",
           title: "Помилка при поновленні розпізнавання",
           data: error

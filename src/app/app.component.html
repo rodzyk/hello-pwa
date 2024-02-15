@@ -11,9 +11,9 @@
     </section>
 </div>
 <details class="logs">
-    <summary>LOgs</summary>
+    <summary>LOGs</summary>
     <div style="overflow: auto;">
-        @for (log of logs.reverse(); track $index) {
+        @for (log of recLogs; track $index) {
         <div [class]="log.type">
             <code>{{log.title}}</code>
             @if(log.data){<code>{{log.data | json}}</code>}
