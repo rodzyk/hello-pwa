@@ -16,7 +16,7 @@ export class AppComponent implements OnInit {
   recLogs: any[] = [];
 
   constructor() {
-    
+
   }
   ngOnInit(): void {
     if ('SpeechRecognition' in window || 'webkitSpeechRecognition' in window) {
@@ -52,8 +52,9 @@ export class AppComponent implements OnInit {
     this.recognition.continuous = true; // Розпізнавання продовжується постійно
 
     // Функція, що викликається при успішному розпізнаванні мовлення
-    this.recognition.onresult =  (event: any) => {
+    this.recognition.onresult = (event: any) => {
       var transcript = event.results[event.results.length - 1][0].transcript;
+      console.log(transcript);
 
       that.recognizedText.push({
         text: transcript,
@@ -63,25 +64,19 @@ export class AppComponent implements OnInit {
     };
 
     // Функція, що викликається при помилці розпізнавання
-    this.recognition.onerror =  (event: any) => {
-      console.error('Помилка розпізнавання мовлення', event);
-      
-      that.recLogs.push({
-        type: "error",
-        title: "Помилка розпізнавання мовлення",
-        data: event
-      })
-    };
+    this.recognition.onerror = (event: any) =>{
+      this.onRecError(event)
+    }
 
     // Функція, що викликається при паузі у мовленні
-    this.recognition.onpause =  (event: any) => {
+    this.recognition.onpause = (event: any) => {
       that.recLogs.push({
         type: "log",
         title: "Розпізнавання призупинено. Запускаємо знову.",
         data: null
       })
       try {
-          this.start(); // Поновлюємо розпізнавання
+        this.start(); // Поновлюємо розпізнавання
       } catch (error) {
         console.error('Помилка  при поновленні розпізнавання', error);
         that.recLogs.push({
@@ -98,23 +93,33 @@ export class AppComponent implements OnInit {
     })
   }
 
+  onRecError(event: any) {
+    console.error('Помилка розпізнавання мовлення', event?.error);
+
+    this.recLogs.push({
+      type: "error",
+      title: "Помилка розпізнавання мовлення",
+      data: event?.error
+    })
+  }
+
   toggle() {
     if (this.paused) {
       this.start()
     } else {
       this.stop()
-     
+
     }
   }
 
   start() {
     this.paused = false;
-      this.recognition.start();
-      this.recLogs.push({
-        type: "log",
-        title: "Старт розпізнавання мовлення",
-        data: null
-      })
+    this.recognition.start();
+    this.recLogs.push({
+      type: "log",
+      title: "Старт розпізнавання мовлення",
+      data: null
+    })
   }
   stop() {
     this.recognition.stop();
