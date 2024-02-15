@@ -39,6 +39,9 @@ export class AppComponent implements OnInit {
   }
 
   initRecognition() {
+
+    const that = this;
+
     this.recLogs.push({
       type: "log",
       title: "Почалася ініціаліція розпізнавання мовлення",
@@ -52,7 +55,7 @@ export class AppComponent implements OnInit {
     this.recognition.onresult =  (event: any) => {
       var transcript = event.results[event.results.length - 1][0].transcript;
 
-      this.recognizedText.push({
+      that.recognizedText.push({
         text: transcript,
         date: Date.now()
       })
@@ -63,7 +66,7 @@ export class AppComponent implements OnInit {
     this.recognition.onerror =  (event: any) => {
       console.error('Помилка розпізнавання мовлення', event);
       
-      this.recLogs.push({
+      that.recLogs.push({
         type: "error",
         title: "Помилка розпізнавання мовлення",
         data: event
@@ -72,7 +75,7 @@ export class AppComponent implements OnInit {
 
     // Функція, що викликається при паузі у мовленні
     this.recognition.onpause =  (event: any) => {
-      this.recLogs.push({
+      that.recLogs.push({
         type: "log",
         title: "Розпізнавання призупинено. Запускаємо знову.",
         data: null
@@ -81,7 +84,7 @@ export class AppComponent implements OnInit {
           this.start(); // Поновлюємо розпізнавання
       } catch (error) {
         console.error('Помилка  при поновленні розпізнавання', error);
-        this.recLogs.push({
+        that.recLogs.push({
           type: "error",
           title: "Помилка при поновленні розпізнавання",
           data: error
