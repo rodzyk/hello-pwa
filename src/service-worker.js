@@ -1,9 +1,10 @@
 self.addEventListener('fetch', event => {
-
+    const { method } = event.request.method
+    
     // Regular requests not related to Web Share Target.
-    if (event.request.method !== "POST") {
-        event.respondWith(fetch(event.request));
-        return;
+    if (method !== "POST") {
+        // event.respondWith(fetch(event.request));
+        return Response.redirect('/', 303);
     }
 
     // Requests related to Web Share Target.
