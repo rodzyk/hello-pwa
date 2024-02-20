@@ -1,23 +1,26 @@
-<div>
+<!-- <div>
     <header>
         <button (click)="toggle()">{{(paused) ? 'Start': 'Stop'}}</button>
     </header>
     <section>
         <div style="overflow: auto;">
-            <span *ngFor="let t of recognizedText" [title]="t.date"><small><code>{{t.date | date : "short"}}</code></small><code>{{t.text | json}}</code></span>
-            
+            <span *ngFor="let t of recognizedText"
+                [title]="t.date"><small><code>{{t.date | date : "short"}}</code></small><code>{{t.text | json}}</code></span>
+
         </div>
     </section>
 </div>
 <details class="logs">
     <summary>LOGS <small>v0.0.6</small></summary>
     <div style="overflow: auto;">
-        
+
         <div [class]="log.type" *ngFor="let log of recLogs">
             <code>{{log.title}}</code>
             <code *ngIf="log.data">{{log.data | json}}</code>
         </div>
-        
+
     </div>
-</details>
+</details> -->
+
+<code>{{data | json}}</code>
 <router-outlet></router-outlet>

@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, WritableSignal, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, OnInit, WritableSignal, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
@@ -36,6 +36,13 @@ export class AppComponent implements OnInit {
         data: null
       })
     }
+  }
+
+  data: any;
+
+  @HostListener('window:message', ['$event'])
+  message(event: MessageEvent) {
+    this.data = event.data
   }
 
   initRecognition() {

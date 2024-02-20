@@ -5,7 +5,7 @@ import { routes } from './app.routes';
 import { provideServiceWorker } from '@angular/service-worker';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideServiceWorker('ngsw-worker.js', {
+  providers: [provideRouter(routes), provideServiceWorker('service-worker.js', {
         enabled: !isDevMode(),
         registrationStrategy: 'registerWhenStable:30000'
     })]

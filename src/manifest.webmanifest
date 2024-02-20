@@ -79,10 +79,12 @@
       "label": "List of Awesome Resources available in Awesome App"
     }
   ],
-  "protocol_handlers": [
-    {
-      "protocol": "web+hellopwa",
-      "url": "/%s"
+  "share_target": {
+    "action": "/",
+    "method": "POST",
+    "enctype": "multipart/form-data",
+    "params": {
+      "url": "url"
     }
-  ]
+  }
 }
