@@ -18,7 +18,7 @@ self.addEventListener('fetch', event => {
             }
 
             self.postMessage(msg)
-
+            return Response.redirect('/', 303);
         })(),
     );
 
