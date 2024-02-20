@@ -1,6 +1,6 @@
 {
-  "name": "hello-pwa",
-  "short_name": "hello-pwa",
+  "name": "Hello pwa",
+  "short_name": "Hi pwa",
   "theme_color": "#161a20",
   "background_color": "#161a20",
   "display_override": ["fullscreen", "minimal-ui"],
@@ -80,7 +80,7 @@
     }
   ],
   "share_target": {
-    "action": "/",
+    "action": "/?share_target",
     "method": "POST",
     "enctype": "multipart/form-data",
     "params": {
