@@ -1,3 +1,5 @@
+importScripts('ngsw-worker.js');
+
 self.addEventListener('fetch', event => {
 
     // Regular requests not related to Web Share Target.
@@ -23,5 +25,3 @@ self.addEventListener('fetch', event => {
     );
 
 });
-
-importScripts('ngsw-worker.js');
