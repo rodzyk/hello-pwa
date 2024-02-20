@@ -51,7 +51,7 @@
               "src/favicon.ico",
               "src/assets",
               "src/manifest.webmanifest",
-              "src/manifest-uk.webmanifest"
+              "src/service-worker.js"
             ],
             "styles": [
               "src/styles.scss"
@@ -114,7 +114,7 @@
               "src/favicon.ico",
               "src/assets",
               "src/manifest.webmanifest",
-              "src/manifest-uk.webmanifest"
+              "src/service-worker.js"
             ],
             "styles": [
               "src/styles.scss"
